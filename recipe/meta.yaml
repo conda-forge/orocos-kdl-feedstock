@@ -13,8 +13,8 @@ source:
       - python_orocos_kdl.patch
 
 build:
-  number: 0
-  skip: true  # [win and vc<14 or unix]
+  number: 1
+  skip: true  # [win and vc<14]
   run_exports:
     - {{ pin_subpackage('orocos-kdl', max_pin='x.x') }}
     - {{ pin_subpackage('python-orocos-kdl', max_pin='x.x') }}
@@ -27,7 +27,7 @@ outputs:
         - {{ compiler('cxx') }}
         - {{ compiler('c') }}
         - cmake
-        - ninja
+        - ninja  # [win]
         - pkg-config
       host:
         - eigen
@@ -37,7 +37,8 @@ outputs:
       commands:
         - if not exist %LIBRARY_PREFIX%\\lib\\orocos-kdl.lib exit 1  # [win]
         - if not exist %LIBRARY_PREFIX%\\lib\\orocos-kdl.dll exit 1  # [win]
-    script: bldpkg.bat
+    script: bldpkg.bat  # [win]
+    script: build.sh  # [unix]
   - name: python-orocos-kdl
     version: {{ version }}
     requirements:
@@ -45,7 +46,7 @@ outputs:
         - {{ compiler('cxx') }}
         - {{ compiler('c') }}
         - cmake
-        - ninja
+        - ninja  # [win]
         - pkg-config
       host:
         - python
@@ -60,7 +61,8 @@ outputs:
     test:
       imports:
         - PyKDL
-    script: bldpkg.bat
+    script: bldpkg.bat  # [win]
+    script: build.sh  # [unix]
 
 about:
   home: https://github.com/orocos/orocos_kinematics_dynamics
