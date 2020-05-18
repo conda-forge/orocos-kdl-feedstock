@@ -37,8 +37,6 @@ outputs:
       commands:
         - if not exist %LIBRARY_PREFIX%\\lib\\orocos-kdl.lib exit 1  # [win]
         - if not exist %LIBRARY_PREFIX%\\lib\\orocos-kdl.dll exit 1  # [win]
-    script: bldpkg.bat  # [win]
-    script: build.sh  # [unix]
   - name: python-orocos-kdl
     version: {{ version }}
     requirements:
@@ -61,8 +59,6 @@ outputs:
     test:
       imports:
         - PyKDL
-    script: bldpkg.bat  # [win]
-    script: build.sh  # [unix]
 
 about:
   home: https://github.com/orocos/orocos_kinematics_dynamics
