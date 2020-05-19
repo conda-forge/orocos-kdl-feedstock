@@ -23,10 +23,8 @@ build:
 outputs:
   - name: orocos-kdl
     version: {{ version }}
-    build:
-      script:
-        - buildpkg.sh  # [unix]
-        - bldpkg.bat  # [win]
+    script: buildpkg.sh  # [unix]
+    script: bldpkg.bat  # [win]
     requirements:
       build:
         - {{ compiler('cxx') }}
@@ -46,10 +44,8 @@ outputs:
         - test -f $PREFIX/lib/liborocos-kdl${SHLIB_EXT}  # [unix]
   - name: python-orocos-kdl
     version: {{ version }}
-    build:
-      script:
-        - buildpkg.sh  # [unix]
-        - bldpkg.bat  # [win]
+    script: buildpkg.sh  # [unix]
+    script: bldpkg.bat  # [win]
     requirements:
       build:
         - {{ compiler('cxx') }}
