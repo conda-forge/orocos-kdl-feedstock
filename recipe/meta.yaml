@@ -6,11 +6,11 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://github.com/orocos/orocos_kinematics_dynamics/archive/{{ version }}.tar.gz
-    sha256: 987cdcf7c7e98db32668e8e5aa14067b5e16217a8ba44b18bfd10447a3f60af0
-    patches:
-      - orocos_kdl.patch
-      - python_orocos_kdl.patch
+  url: https://github.com/orocos/orocos_kinematics_dynamics/archive/{{ version }}.tar.gz
+  sha256: 987cdcf7c7e98db32668e8e5aa14067b5e16217a8ba44b18bfd10447a3f60af0
+  patches:
+    - orocos_kdl.patch
+    - python_orocos_kdl.patch
 
 build:
   number: 1
@@ -23,8 +23,9 @@ build:
 outputs:
   - name: orocos-kdl
     version: {{ version }}
-    script: buildpkg.sh  # [unix]
-    script: bldpkg.bat  # [win]
+    script:
+      - buildpkg.sh  # [unix]
+      - bldpkg.bat  # [win]
     requirements:
       build:
         - {{ compiler('cxx') }}
@@ -44,8 +45,9 @@ outputs:
         - test -f $PREFIX/lib/liborocos-kdl${SHLIB_EXT}  # [unix]
   - name: python-orocos-kdl
     version: {{ version }}
-    script: buildpkg.sh  # [unix]
-    script: bldpkg.bat  # [win]
+    script:
+      - buildpkg.sh  # [unix]
+      - bldpkg.bat  # [win]
     requirements:
       build:
         - {{ compiler('cxx') }}
