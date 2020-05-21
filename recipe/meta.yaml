@@ -6,15 +6,17 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://github.com/orocos/orocos_kinematics_dynamics/archive/{{ version }}.tar.gz
-    sha256: 987cdcf7c7e98db32668e8e5aa14067b5e16217a8ba44b18bfd10447a3f60af0
-    patches:
-      - orocos_kdl.patch
-      - python_orocos_kdl.patch
+  url: https://github.com/orocos/orocos_kinematics_dynamics/archive/{{ version }}.tar.gz
+  sha256: 987cdcf7c7e98db32668e8e5aa14067b5e16217a8ba44b18bfd10447a3f60af0
+  patches:
+    - orocos_kdl.patch
+    - python_orocos_kdl.patch
+    - python_osx.patch  # [osx]
 
 build:
-  number: 0
-  skip: true  # [win and vc<14 or unix]
+  number: 1
+  skip: true  # [win and vc<14]
+  script: "echo 'do nothing'"  # [unix]
   run_exports:
     - {{ pin_subpackage('orocos-kdl', max_pin='x.x') }}
     - {{ pin_subpackage('python-orocos-kdl', max_pin='x.x') }}
@@ -22,12 +24,15 @@ build:
 outputs:
   - name: orocos-kdl
     version: {{ version }}
+    script: buildpkg.sh  # [unix]
+    script: bldpkg.bat  # [win]
     requirements:
       build:
         - {{ compiler('cxx') }}
         - {{ compiler('c') }}
         - cmake
-        - ninja
+        - ninja  # [win]
+        - make  # [not win]
         - pkg-config
       host:
         - eigen
@@ -37,30 +42,34 @@ outputs:
       commands:
         - if not exist %LIBRARY_PREFIX%\\lib\\orocos-kdl.lib exit 1  # [win]
         - if not exist %LIBRARY_PREFIX%\\lib\\orocos-kdl.dll exit 1  # [win]
-    script: bldpkg.bat
+        - test -f $PREFIX/lib/liborocos-kdl${SHLIB_EXT}  # [unix]
   - name: python-orocos-kdl
     version: {{ version }}
+    script: buildpkg.sh  # [unix]
+    script: bldpkg.bat  # [win]
     requirements:
       build:
         - {{ compiler('cxx') }}
         - {{ compiler('c') }}
         - cmake
-        - ninja
+        - ninja  # [win]
+        - make  # [not win]
         - pkg-config
       host:
         - python
         - eigen
         - orocos-kdl
-        - sip
+        - sip 4.19.20  # [win]
+        - sip  # [not win]
       run:
         - python
         - eigen
         - orocos-kdl
-        - sip
+        - sip 4.19.20  # [win]
+        - sip  # [not win]
     test:
       imports:
         - PyKDL
-    script: bldpkg.bat
 
 about:
   home: https://github.com/orocos/orocos_kinematics_dynamics
@@ -73,3 +82,5 @@ about:
 extra:
   recipe-maintainers:
     - seanyen
+    - wolfv
+    - Tobias-Fischer
