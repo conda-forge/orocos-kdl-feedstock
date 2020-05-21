@@ -59,12 +59,14 @@ outputs:
         - python
         - eigen
         - orocos-kdl
-        - sip
+        - sip 4.19.20  # [win]
+        - sip  # [not win]
       run:
         - python
         - eigen
         - orocos-kdl
-        - sip
+        - sip 4.19.20  # [win]
+        - sip  # [not win]
     test:
       imports:
         - PyKDL
