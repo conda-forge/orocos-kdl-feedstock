@@ -1,6 +1,17 @@
---- python_orocos_kdl/CMakeLists.txt
-+++ python_orocos_kdl/CMakeLists.txt
-@@ -18,7 +18,7 @@
+diff --git a/python_orocos_kdl/CMakeLists.txt b/python_orocos_kdl/CMakeLists.txt
+index 35c1c3e..452e143 100644
+--- a/python_orocos_kdl/CMakeLists.txt
++++ b/python_orocos_kdl/CMakeLists.txt
+@@ -6,7 +6,7 @@ find_package(orocos_kdl)
+ include_directories(${orocos_kdl_INCLUDE_DIRS})
+ link_directories(${orocos_kdl_LIBRARY_DIRS})
+ 
+-SET(PYTHON_VERSION 2 CACHE STRING "Python Version")
++SET(PYTHON_VERSION 3 CACHE STRING "Python Version")
+ find_package(PythonInterp ${PYTHON_VERSION} REQUIRED)
+ find_package(PythonLibs ${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR} REQUIRED)
+ execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(plat_specific=True, prefix=''))" OUTPUT_VARIABLE PYTHON_SITE_PACKAGES OUTPUT_STRIP_TRAILING_WHITESPACE)
+@@ -19,7 +19,7 @@ include_directories(${SIP_INCLUDE_DIR} ${PYTHON_INCLUDE_DIRS})
  file(GLOB SIP_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.sip")
  set(SIP_INCLUDES ${SIP_FILES})
  set(SIP_EXTRA_OPTIONS "-o")
@@ -8,12 +19,14 @@
 +set(PYTHON_SITE_PACKAGES_INSTALL_DIR ${CONDA_SP_DIR})
  add_sip_python_module(PyKDL PyKDL/PyKDL.sip ${orocos_kdl_LIBRARIES})
  
- install(FILES package.xml DESTINATION share/python_orocos_kdl)
+-install(FILES package.xml DESTINATION share/python_orocos_kdl)
 \ No newline at end of file
-
---- python_orocos_kdl/cmake/SIPMacros.cmake
-+++ python_orocos_kdl/cmake/SIPMacros.cmake
-@@ -118,6 +118,9 @@
++install(FILES package.xml DESTINATION share/python_orocos_kdl)
+diff --git a/python_orocos_kdl/cmake/SIPMacros.cmake b/python_orocos_kdl/cmake/SIPMacros.cmake
+index 4464a92..9d06448 100644
+--- a/python_orocos_kdl/cmake/SIPMacros.cmake
++++ b/python_orocos_kdl/cmake/SIPMacros.cmake
+@@ -118,6 +118,9 @@ MACRO(ADD_SIP_PYTHON_MODULE MODULE_NAME MODULE_SIP)
      TARGET_LINK_LIBRARIES(${_logical_name} ${PYTHON_LIBRARY})
      TARGET_LINK_LIBRARIES(${_logical_name} ${EXTRA_LINK_LIBRARIES})
      SET_TARGET_PROPERTIES(${_logical_name} PROPERTIES PREFIX "" OUTPUT_NAME ${_child_module_name})
@@ -23,3 +36,4 @@
  
      INSTALL(TARGETS ${_logical_name} DESTINATION "${PYTHON_SITE_PACKAGES_INSTALL_DIR}/${_parent_module_path}")
  
+
