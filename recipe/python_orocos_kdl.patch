@@ -73,3 +73,18 @@ index 4464a92..213203d 100644
  
      INSTALL(TARGETS ${_logical_name} DESTINATION "${PYTHON_SITE_PACKAGES_INSTALL_DIR}/${_parent_module_path}")
  
+diff --git a/python_orocos_kdl/cmake/FindSIP.cmake b/python_orocos_kdl/cmake/FindSIP.cmake
+index 100474b..d819d3b 100644
+--- a/python_orocos_kdl/cmake/FindSIP.cmake
++++ b/python_orocos_kdl/cmake/FindSIP.cmake
+@@ -51,6 +51,10 @@ ELSE(SIP_VERSION)
+       STRING(REGEX REPLACE ".*\nsip_inc_dir:([^\n]+).*$" "\\1" SIP_INCLUDE_DIR ${sip_config})
+     ENDIF(CMAKE_CROSSCOMPILING)
+ 
++    if (WIN32)
++      set(SIP_EXECUTABLE ${SIP_EXECUTABLE}.exe)
++    endif()
++
+     SET(SIP_FOUND TRUE)
+   ENDIF(sip_config)
+ 
