@@ -54,7 +54,7 @@ index 4464a92..213203d 100644
 +        COMMAND ${CMAKE_COMMAND} -E echo ${_abs_module_sip}
 +        COMMAND ${CMAKE_COMMAND} -E touch ${_sip_output_files}
 +        COMMAND ${CMAKE_COMMAND} -E echo ${_sip_output_files}
-+        COMMAND ${CMAKE_COMMAND} -E echo ${SIP_INCLUDES}
++        COMMAND ${CMAKE_COMMAND} -E echo ${SIP_EXECUTABLE}
 +        COMMAND ${CMAKE_COMMAND} -E echo ${_sip_includes}
 +        COMMAND ${CMAKE_COMMAND} -E echo ${_sip_tags}
          COMMAND ${SIP_EXECUTABLE} ${_sip_tags} ${_sip_x} ${SIP_EXTRA_OPTIONS} -j ${SIP_CONCAT_PARTS} -c ${CMAKE_CURRENT_SIP_OUTPUT_DIR} ${_sip_includes} ${_abs_module_sip}
