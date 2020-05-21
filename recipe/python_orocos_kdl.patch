@@ -88,3 +88,23 @@ index 100474b..d819d3b 100644
      SET(SIP_FOUND TRUE)
    ENDIF(sip_config)
  
+diff --git a/python_orocos_kdl/PyKDL/PyKDL.sip b/python_orocos_kdl/PyKDL/PyKDL.sip
+index 1de0452..15142f5 100644
+--- a/python_orocos_kdl/PyKDL/PyKDL.sip
++++ b/python_orocos_kdl/PyKDL/PyKDL.sip
+@@ -24,9 +24,9 @@
+ 
+ %License(type="LGPL",licensee="Ruben Smits",signature="ruben@intermodalics.eu",timestamp="2014")
+ 
+-%Include std_string.sip
+-%Include frames.sip
+-%Include kinfam.sip
+-%Include framevel.sip
++//%Include std_string.sip
++//%Include frames.sip
++//%Include kinfam.sip
++//%Include framevel.sip
+ 
+-%Include dynamics.sip
++//%Include dynamics.sip
+
