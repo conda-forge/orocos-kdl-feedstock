@@ -1,22 +1,41 @@
-diff --git a/python_orocos_kdl/PyKDL/sip/dynamics.sip b/python_orocos_kdl/PyKDL/sip/dynamics.sip
-index c5efb5b..2f2e4c2 100644
---- a/python_orocos_kdl/PyKDL/sip/dynamics.sip
-+++ b/python_orocos_kdl/PyKDL/sip/dynamics.sip
-@@ -93,4 +93,7 @@ public:
+diff --git a/python_orocos_kdl/PyKDL/dynamics.sip b/python_orocos_kdl/PyKDL/dynamics.sip
+index e0096dd..5e1ec53 100644
+--- a/python_orocos_kdl/PyKDL/dynamics.sip
++++ b/python_orocos_kdl/PyKDL/dynamics.sip
+@@ -72,4 +72,6 @@ public:
      int JntToCoriolis(const JntArray &q, const JntArray &q_dot, JntArray &coriolis);
-     int JntToMass(const JntArray &q, JntSpaceInertiaMatrix& H);
-     int JntToGravity(const JntArray &q,JntArray &gravity);
-+
+ 	int JntToMass(const JntArray &q, JntSpaceInertiaMatrix& H);
+ 	int JntToGravity(const JntArray &q,JntArray &gravity);
 +private:
 +    ChainDynParam& operator=(const ChainDynParam&);
  };
-diff --git a/python_orocos_kdl/PyKDL/sip/kinfam.sip b/python_orocos_kdl/PyKDL/sip/kinfam.sip
-index e80ad36..4b68aa6 100644
---- a/python_orocos_kdl/PyKDL/sip/kinfam.sip
-+++ b/python_orocos_kdl/PyKDL/sip/kinfam.sip
-@@ -412,6 +412,9 @@ public:
- //    Argument by reference doesn't work for container types
- //    virtual int JntToCart(const JntArray& q_in, std::vector<Frame>& p_out, int segmentNr=-1);
+diff --git a/python_orocos_kdl/PyKDL/kinfam.sip b/python_orocos_kdl/PyKDL/kinfam.sip
+index d87fd00..03cce7f 100644
+--- a/python_orocos_kdl/PyKDL/kinfam.sip
++++ b/python_orocos_kdl/PyKDL/kinfam.sip
+@@ -321,6 +321,9 @@ class ChainFkSolverPos : SolverI
+ using namespace KDL;
+ %End
+     virtual int JntToCart(const JntArray& q_in, Frame& p_out,int segmentNr=-1)=0;
++
++private:
++    ChainFkSolverPos& operator=(const ChainFkSolverPos&);
+ };
+ 
+ class ChainFkSolverVel : SolverI
+@@ -331,6 +334,9 @@ using namespace KDL;
+ %End
+     virtual int JntToCart(const JntArrayVel& q_in, FrameVel& p_out,int
+     segmentNr=-1)=0;
++
++private:
++    ChainFkSolverVel& operator=(const ChainFkSolverVel&);
+ };
+ 
+ class ChainFkSolverPos_recursive : ChainFkSolverPos
+@@ -344,6 +350,9 @@ public:
+     ChainFkSolverPos_recursive(const Chain& chain);
+     virtual int JntToCart(const JntArray& q_in, Frame& p_out,int segmentNr=-1);
      virtual void updateInternalDataStructures();
 +
 +private:
@@ -24,9 +43,9 @@ index e80ad36..4b68aa6 100644
  };
  
  class ChainFkSolverVel_recursive : ChainFkSolverVel
-@@ -426,6 +429,9 @@ public:
- //    Argument by reference doesn't work for container types
- //    virtual int JntToCart(const JntArrayVel& q_in, std::vector<FrameVel>& out, int segmentNr=-1 );
+@@ -357,6 +366,9 @@ public:
+     virtual int JntToCart(const JntArrayVel& q_in ,FrameVel& out,int
+     segmentNr=-1 );
      virtual void updateInternalDataStructures();
 +
 +private:
@@ -34,8 +53,28 @@ index e80ad36..4b68aa6 100644
  };
  
  class ChainIkSolverPos : SolverI {
-@@ -461,6 +467,9 @@ public:
+@@ -367,6 +379,9 @@ using namespace KDL;
+ public:
+     virtual int CartToJnt(const JntArray& q_init , const Frame& p_in, JntArray& q_out )=0;
+     virtual void updateInternalDataStructures()=0;
++
++private:
++    ChainIkSolverPos& operator=(const ChainIkSolverPos&);
+ };
  
+ class ChainIkSolverVel : SolverI {
+@@ -378,6 +393,9 @@ public:
+     virtual int CartToJnt(const JntArray& q_in , const Twist& v_in , JntArray& qdot_out )=0;
+     virtual int CartToJnt(const JntArray& q_init , const FrameVel& v_in , JntArrayVel& q_out )=0;
+     virtual void updateInternalDataStructures()=0;
++
++private:
++    ChainIkSolverVel& operator=(const ChainIkSolverVel&);
+ };
+ 
+ class ChainIkSolverPos_NR : ChainIkSolverPos
+@@ -392,6 +410,9 @@ public:
+     
      virtual int CartToJnt(const JntArray& q_init , const Frame& p_in ,JntArray& q_out);
      virtual void updateInternalDataStructures();
 +
@@ -44,8 +83,8 @@ index e80ad36..4b68aa6 100644
  };
  
  class ChainIkSolverPos_NR_JL : ChainIkSolverPos
-@@ -476,6 +485,9 @@ public:
- 
+@@ -407,6 +428,9 @@ public:
+     
      virtual int CartToJnt(const JntArray& q_init , const Frame& p_in ,JntArray& q_out);
      virtual void updateInternalDataStructures();
 +
@@ -54,8 +93,8 @@ index e80ad36..4b68aa6 100644
  };
  
  class ChainIkSolverVel_pinv : ChainIkSolverVel
-@@ -489,6 +501,9 @@ public:
- 
+@@ -420,6 +444,9 @@ public:
+         
      virtual int CartToJnt(const JntArray& q_in, const Twist& v_in, JntArray& qdot_out);
      virtual void updateInternalDataStructures();
 +
@@ -64,7 +103,7 @@ index e80ad36..4b68aa6 100644
  };
  
  class ChainIkSolverVel_wdls : ChainIkSolverVel
-@@ -598,6 +613,8 @@ public:
+@@ -506,6 +533,8 @@ public:
  
      void setLambda(const double& lambda);
  
@@ -73,7 +112,7 @@ index e80ad36..4b68aa6 100644
  };
  
  
-@@ -612,6 +629,9 @@ public:
+@@ -520,6 +549,9 @@ public:
  
      virtual int CartToJnt(const JntArray& q_init , const Frame& p_in ,JntArray& q_out);
      virtual void updateInternalDataStructures();
@@ -83,7 +122,7 @@ index e80ad36..4b68aa6 100644
  };
  
  
-@@ -638,6 +658,9 @@ public:
+@@ -546,6 +578,9 @@ public:
      const JntArray& getOptPos()const /Factory/;
  
      const double& getAlpha()const /Factory/;
@@ -93,8 +132,8 @@ index e80ad36..4b68aa6 100644
  };
  
  class ChainIkSolverVel_pinv_givens : ChainIkSolverVel
-@@ -651,6 +674,9 @@ public:
- 
+@@ -559,6 +594,9 @@ public:
+         
      virtual int CartToJnt(const JntArray& q_in, const Twist& v_in, JntArray& qdot_out);
      virtual void updateInternalDataStructures();
 +
@@ -103,31 +142,11 @@ index e80ad36..4b68aa6 100644
  };
  
  class ChainJntToJacSolver : SolverI
-@@ -663,6 +689,9 @@ public:
+@@ -571,4 +609,7 @@ public:
      ChainJntToJacSolver(const Chain& chain);
-     int JntToJac(const JntArray& q_in,Jacobian& jac, int seg_nr=-1);
+     int JntToJac(const JntArray& q_in,Jacobian& jac);
      virtual void updateInternalDataStructures();
 +
 +private:
 +    ChainJntToJacSolver& operator=(const ChainJntToJacSolver&);
- };
- 
- class ChainJntToJacDotSolver : SolverI
-@@ -690,6 +719,9 @@ public:
-     void setBodyFixedRepresentation();
-     void setInertialRepresentation();
-     void setRepresentation(const int& representation);
-+
-+private:
-+    ChainJntToJacDotSolver& operator=(const ChainJntToJacDotSolver&);
- };
- 
- class ChainIdSolver : SolverI
-@@ -712,4 +744,7 @@ public:
-     ChainIdSolver_RNE(const Chain& chain,Vector grav);
-     int CartToJnt(const JntArray &q, const JntArray &q_dot, const JntArray &q_dotdot, const std::vector<Wrench>& f_ext,JntArray &torques);
-     virtual void updateInternalDataStructures();
-+
-+private:
-+    ChainIdSolver_RNE& operator=(const KDL::ChainIdSolver_RNE&);
  };
