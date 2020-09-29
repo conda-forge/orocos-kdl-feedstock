@@ -12,7 +12,7 @@ source:
     - orocos_kdl.patch
     - python_orocos_kdl.patch
     - python_osx.patch  # [osx]
-    - assignment_operator.patch  # [ppc64le or aarch64]
+    - assignment_operator.patch  # [unix]
 
 build:
   number: 0
