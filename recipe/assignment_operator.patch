@@ -1,19 +1,5 @@
-From f8d488cad733d2c2c6fe6911dc2e72e014ad0002 Mon Sep 17 00:00:00 2001
-From: Jochen Sprickerhof <git@jochen.sprickerhof.de>
-Date: Fri, 26 Jun 2020 17:04:12 +0200
-Subject: [PATCH] Declare assignment operator private for SIP (Closes: #260)
-
-Starting with v4.19.23 SIP expects a working operator= or one marked
-private explicitly. All classes in this PR have a reference member
-(&chain) resulting in the compiler deleting the default assignment
-operator. This PR makes this known to SIP as well.
----
- python_orocos_kdl/PyKDL/sip/dynamics.sip |  3 ++
- python_orocos_kdl/PyKDL/sip/kinfam.sip   | 35 ++++++++++++++++++++++++
- 2 files changed, 38 insertions(+)
-
 diff --git a/python_orocos_kdl/PyKDL/sip/dynamics.sip b/python_orocos_kdl/PyKDL/sip/dynamics.sip
-index c5efb5b7..2f2e4c2e 100644
+index c5efb5b..2f2e4c2 100644
 --- a/python_orocos_kdl/PyKDL/sip/dynamics.sip
 +++ b/python_orocos_kdl/PyKDL/sip/dynamics.sip
 @@ -93,4 +93,7 @@ public:
@@ -25,7 +11,7 @@ index c5efb5b7..2f2e4c2e 100644
 +    ChainDynParam& operator=(const ChainDynParam&);
  };
 diff --git a/python_orocos_kdl/PyKDL/sip/kinfam.sip b/python_orocos_kdl/PyKDL/sip/kinfam.sip
-index e80ad366..4b68aa6e 100644
+index e80ad36..4b68aa6 100644
 --- a/python_orocos_kdl/PyKDL/sip/kinfam.sip
 +++ b/python_orocos_kdl/PyKDL/sip/kinfam.sip
 @@ -412,6 +412,9 @@ public:
