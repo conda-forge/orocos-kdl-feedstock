@@ -5,11 +5,9 @@ Home: https://github.com/orocos/orocos_kinematics_dynamics
 
 Package license: LGPL-2.1-or-later
 
-Feedstock license: BSD-3-Clause
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/orocos-kdl-feedstock/blob/master/LICENSE.txt)
 
 Summary: Orocos Kinematics and Dynamics C++ library
-
-
 
 
 Current build status
