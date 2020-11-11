@@ -15,7 +15,7 @@ source:
     - assignment_operator.patch  # [unix]
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win and vc<14]
   script: "echo 'do nothing'"  # [unix]
   run_exports:
