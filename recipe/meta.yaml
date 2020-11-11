@@ -66,8 +66,7 @@ outputs:
         - python
         - eigen
         - orocos-kdl
-        - sip 4.19.20  # [win]
-        - sip  # [not win]
+        - sip
     test:
       imports:
         - PyKDL
