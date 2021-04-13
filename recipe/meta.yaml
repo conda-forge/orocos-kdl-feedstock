@@ -29,8 +29,6 @@ outputs:
     script: bldpkg.bat  # [win]
     requirements:
       build:
-        - python                                 # [build_platform != target_platform]
-        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
         - {{ compiler('cxx') }}
         - {{ compiler('c') }}
         - cmake
@@ -52,6 +50,8 @@ outputs:
     script: bldpkg.bat  # [win]
     requirements:
       build:
+        - python                                 # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
         - {{ compiler('cxx') }}
         - {{ compiler('c') }}
         - cmake
