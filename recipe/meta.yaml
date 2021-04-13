@@ -58,6 +58,7 @@ outputs:
         - ninja  # [win]
         - make  # [not win]
         - pkg-config
+        - sip                                    # [build_platform != target_platform]
       host:
         - python
         - eigen
