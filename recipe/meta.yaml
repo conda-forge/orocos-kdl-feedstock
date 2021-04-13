@@ -13,6 +13,7 @@ source:
     - python_orocos_kdl.patch
     - python_osx.patch  # [osx]
     - assignment_operator.patch  # [unix]
+    - debug_sip_include_dir.patch
 
 build:
   number: 0
