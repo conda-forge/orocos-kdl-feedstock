@@ -1,0 +1,23 @@
+diff --git a/python_orocos_kdl/cmake/FindSIP.cmake b/python_orocos_kdl/cmake/FindSIP.cmake
+index 100474ba..eddaa821 100644
+--- a/python_orocos_kdl/cmake/FindSIP.cmake
++++ b/python_orocos_kdl/cmake/FindSIP.cmake
+@@ -44,8 +44,8 @@ ELSE(SIP_VERSION)
+     IF(CMAKE_CROSSCOMPILING)
+       FIND_PROGRAM(SIP_EXECUTABLE sip)
+       STRING(REGEX REPLACE ".*\nsip_inc_dir:([^\n]+).*$" "\\1" SIP_INCLUDE_DIR ${sip_config})
+-      LIST(GET CMAKE_FIND_ROOT_PATH 0 SIP_SYSROOT)
+-      SET(SIP_INCLUDE_DIR "${SIP_SYSROOT}${SIP_INCLUDE_DIR}")
++      # LIST(GET CMAKE_FIND_ROOT_PATH 0 SIP_SYSROOT)
++      # SET(SIP_INCLUDE_DIR "${SIP_SYSROOT}${SIP_INCLUDE_DIR}")
+     ELSE(CMAKE_CROSSCOMPILING)
+       STRING(REGEX REPLACE ".*\nsip_bin:([^\n]+).*$" "\\1" SIP_EXECUTABLE ${sip_config})
+       STRING(REGEX REPLACE ".*\nsip_inc_dir:([^\n]+).*$" "\\1" SIP_INCLUDE_DIR ${sip_config})
+@@ -57,6 +57,7 @@ ELSE(SIP_VERSION)
+   IF(SIP_FOUND)
+     IF(NOT SIP_FIND_QUIETLY)
+       MESSAGE(STATUS "Found SIP version: ${SIP_VERSION_STR}")
++      MESSAGE(STATUS "SIP_INCLUDE_DIR: ${SIP_INCLUDE_DIR}")
+     ENDIF(NOT SIP_FIND_QUIETLY)
+   ELSE(SIP_FOUND)
+     IF(SIP_FIND_REQUIRED)

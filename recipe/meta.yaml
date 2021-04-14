@@ -11,8 +11,9 @@ source:
   patches:
     - orocos_kdl.patch
     - python_orocos_kdl.patch
-    - python_osx.patch  # [osx]
-    - assignment_operator.patch  # [unix]
+    - python_osx.patch                    # [osx]
+    - assignment_operator.patch           # [unix]
+    - crosscompile_sip_include_dir.patch  # [build_platform != target_platform]
 
 build:
   number: 0
@@ -26,14 +27,14 @@ outputs:
   - name: orocos-kdl
     version: {{ version }}
     script: buildpkg.sh  # [unix]
-    script: bldpkg.bat  # [win]
+    script: bldpkg.bat   # [win]
     requirements:
       build:
         - {{ compiler('cxx') }}
         - {{ compiler('c') }}
         - cmake
-        - ninja  # [win]
-        - make  # [not win]
+        - ninja       # [win]
+        - make        # [not win]
         - pkg-config
       host:
         - eigen
@@ -43,31 +44,34 @@ outputs:
       commands:
         - if not exist %LIBRARY_PREFIX%\\lib\\orocos-kdl.lib exit 1  # [win]
         - if not exist %LIBRARY_PREFIX%\\lib\\orocos-kdl.dll exit 1  # [win]
-        - test -f $PREFIX/lib/liborocos-kdl${SHLIB_EXT}  # [unix]
+        - test -f $PREFIX/lib/liborocos-kdl${SHLIB_EXT}              # [unix]
   - name: python-orocos-kdl
     version: {{ version }}
     script: buildpkg.sh  # [unix]
-    script: bldpkg.bat  # [win]
+    script: bldpkg.bat   # [win]
     requirements:
       build:
+        - python                                 # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
         - {{ compiler('cxx') }}
         - {{ compiler('c') }}
         - cmake
         - ninja  # [win]
         - make  # [not win]
         - pkg-config
+        - sip                                    # [build_platform != target_platform]
       host:
         - python
         - eigen
         - orocos-kdl
-        - sip 4.19.20  # [win]
-        - sip  # [not win]
+        - sip 4.19.20                            # [win]
+        - sip                                    # [not win and build_platform == target_platform]
       run:
         - python
         - eigen
         - orocos-kdl
-        - sip 4.19.20  # [win]
-        - sip  # [not win]
+        - sip 4.19.20                            # [win]
+        - sip                                    # [not win]
     test:
       imports:
         - PyKDL
