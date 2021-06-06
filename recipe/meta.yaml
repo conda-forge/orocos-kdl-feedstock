@@ -42,6 +42,7 @@ outputs:
         - if not exist %LIBRARY_PREFIX%\\lib\\orocos-kdl.lib exit 1  # [win]
         - if not exist %LIBRARY_PREFIX%\\lib\\orocos-kdl.dll exit 1  # [win]
         - test -f $PREFIX/lib/liborocos-kdl${SHLIB_EXT}              # [unix]
+
   - name: python-orocos-kdl
     version: {{ version }}
     script: buildpkg.sh  # [unix]
@@ -57,7 +58,7 @@ outputs:
         - ninja                                  # [win]
         - make                                   # [not win]
         - pkg-config
-    host:
+      host:
         - python
         - eigen
         - orocos-kdl
