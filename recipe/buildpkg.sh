@@ -14,6 +14,7 @@ cmake ${CMAKE_ARGS} $SRC_DIR/$PKG_NAME_ALIAS \
     -DCMAKE_BUILD_TYPE=Release \
     -DCONDA_SP_DIR=$SP_DIR \
     -DSETUPTOOLS_DEB_LAYOUT=OFF \
+    -DPYTHON_SITE_PACKAGES_INSTALL_DIR=$SP_DIR \
     -DPYTHON_EXECUTABLE=$PYTHON
 
 cmake --build . --config Release --target install
