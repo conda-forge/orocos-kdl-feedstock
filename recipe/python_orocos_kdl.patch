@@ -1,0 +1,13 @@
+diff --git a/python_orocos_kdl/CMakeLists.txt b/python_orocos_kdl/CMakeLists.txt
+index 655c316b..a319bb00 100644
+--- a/python_orocos_kdl/CMakeLists.txt
++++ b/python_orocos_kdl/CMakeLists.txt
+@@ -13,7 +13,7 @@ link_directories(${orocos_kdl_LIBRARY_DIRS})
+ if(DEFINED ENV{ROS_PYTHON_VERSION})
+   SET(PYTHON_VERSION $ENV{ROS_PYTHON_VERSION} CACHE STRING "Python Version")
+ else()
+-  SET(PYTHON_VERSION 2 CACHE STRING "Python Version")
++  SET(PYTHON_VERSION 3 CACHE STRING "Python Version")
+ endif()
+ 
+ set(PYBIND11_PYTHON_VERSION ${PYTHON_VERSION} CACHE STRING "Python version used by PyBind11")
