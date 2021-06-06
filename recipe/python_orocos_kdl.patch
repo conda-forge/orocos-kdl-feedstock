@@ -11,3 +11,13 @@ index 655c316b..a319bb00 100644
  endif()
  
  set(PYBIND11_PYTHON_VERSION ${PYTHON_VERSION} CACHE STRING "Python version used by PyBind11")
+@@ -38,7 +38,8 @@ endif()
+ 
+ # Build the module
+ SET(PYTHON_MODULE_EXTENSION ".so")
+-add_subdirectory(pybind11)
++find_package(Python COMPONENTS Interpreter Development)
++find_package(pybind11 CONFIG REQUIRED)
+ pybind11_add_module(${LIBRARY_NAME}
+   PyKDL/PyKDL.h
+   PyKDL/PyKDL.cpp
