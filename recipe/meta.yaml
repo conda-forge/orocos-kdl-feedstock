@@ -1,5 +1,5 @@
 {% set name = "orocos-kdl" %}
-{% set version = "1.4.0" %}
+{% set version = "1.5.0" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/orocos/orocos_kinematics_dynamics/archive/v{{ version }}.tar.gz
-  sha256: 05b93e759923684dc07433ccae1e476d158d89b3c2be5079c20062406da7b4dd
+  sha256: 6d4b04c465f0974286fbb419c40e3aca145f616571f2462e2696b830288234a9
   patches:
     - orocos_kdl.patch
     - python_orocos_kdl.patch
@@ -18,7 +18,7 @@ source:
 build:
   number: 0
   skip: true  # [win and vc<14]
-  script: "echo 'do nothing'"  # [unix]
+  script: echo 'do nothing'  # [unix]
   run_exports:
     - {{ pin_subpackage('orocos-kdl', max_pin='x.x') }}
     - {{ pin_subpackage('python-orocos-kdl', max_pin='x.x') }}
@@ -27,7 +27,7 @@ outputs:
   - name: orocos-kdl
     version: {{ version }}
     script: buildpkg.sh  # [unix]
-    script: bldpkg.bat   # [win]
+    script: bldpkg.bat  # [win]
     requirements:
       build:
         - {{ compiler('cxx') }}
@@ -48,7 +48,7 @@ outputs:
   - name: python-orocos-kdl
     version: {{ version }}
     script: buildpkg.sh  # [unix]
-    script: bldpkg.bat   # [win]
+    script: bldpkg.bat  # [win]
     requirements:
       build:
         - python                                 # [build_platform != target_platform]
