@@ -14,7 +14,6 @@ source:
 
 build:
   number: 0
-  skip: true  # [win and vc<14]
   script: echo 'do nothing'  # [unix]
   run_exports:
     - {{ pin_subpackage('orocos-kdl', max_pin='x.x') }}
@@ -45,7 +44,6 @@ outputs:
         - if not exist %LIBRARY_PREFIX%\\lib\\orocos-kdl.lib exit 1  # [win]
         - if not exist %LIBRARY_PREFIX%\\lib\\orocos-kdl.dll exit 1  # [win]
         - test -f $PREFIX/lib/liborocos-kdl${SHLIB_EXT}              # [unix]
-
   - name: python-orocos-kdl
     version: {{ version }}
     script: buildpkg.sh  # [unix]
