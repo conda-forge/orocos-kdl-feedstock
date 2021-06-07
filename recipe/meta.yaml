@@ -14,16 +14,18 @@ source:
 
 build:
   number: 0
-  script: echo 'do nothing'  # [unix and build_platform == target_platform]
-  run_exports:
-    - {{ pin_subpackage('orocos-kdl', max_pin='x.x') }}
-    - {{ pin_subpackage('python-orocos-kdl', max_pin='x.x') }}
 
 outputs:
   - name: orocos-kdl
     version: {{ version }}
     script: buildpkg.sh  # [unix]
     script: bldpkg.bat  # [win]
+    build:
+      run_exports:
+        - {{ pin_subpackage('orocos-kdl', max_pin='x.x') }}
+      ignore_run_exports_from:
+        - python                                 # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     requirements:
       build:
         - {{ compiler('cxx') }}
@@ -32,11 +34,11 @@ outputs:
         - ninja       # [win]
         - make        # [not win]
         - pkg-config
-        - python                                 # [build_platform != target_platform]
+        - python *                               # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]        
       host:
         - eigen
-        - python
+        - python *
       run:
         - eigen
     test:
@@ -48,6 +50,12 @@ outputs:
     version: {{ version }}
     script: buildpkg.sh  # [unix]
     script: bldpkg.bat  # [win]
+    build:
+      run_exports:
+        - {{ pin_subpackage('python-orocos-kdl', max_pin='x.x') }}
+      ignore_run_exports_from:
+        - python                                 # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     requirements:
       build:
         - python                                 # [build_platform != target_platform]
