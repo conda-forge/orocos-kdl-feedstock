@@ -37,7 +37,7 @@ index 655c316..cc6879b 100644
 -SET(PYTHON_MODULE_EXTENSION ".so")
 -add_subdirectory(pybind11)
 +if(WIN32)
-+  set(PYTHON_MODULE_EXTENSION ".pyd")
++  # set(PYTHON_MODULE_EXTENSION ".pyd")
 +else()
 +  set(PYTHON_MODULE_EXTENSION ".so")
 +endif()
