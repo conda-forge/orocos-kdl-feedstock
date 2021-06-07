@@ -14,7 +14,7 @@ source:
 
 build:
   number: 0
-  script: echo 'do nothing'  # [unix]
+  script: echo 'do nothing'  # [unix and build_platform == target_platform]
   run_exports:
     - {{ pin_subpackage('orocos-kdl', max_pin='x.x') }}
     - {{ pin_subpackage('python-orocos-kdl', max_pin='x.x') }}
