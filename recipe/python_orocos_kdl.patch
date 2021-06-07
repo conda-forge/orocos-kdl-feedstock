@@ -1,5 +1,5 @@
 diff --git a/python_orocos_kdl/CMakeLists.txt b/python_orocos_kdl/CMakeLists.txt
-index 655c316b..a319bb00 100644
+index 655c316..cc6879b 100644
 --- a/python_orocos_kdl/CMakeLists.txt
 +++ b/python_orocos_kdl/CMakeLists.txt
 @@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.0.2)
@@ -12,7 +12,7 @@ index 655c316b..a319bb00 100644
  
  project(python_orocos_kdl VERSION 1.5.0)
  
-@@ -13,7 +13,7 @@ link_directories(${orocos_kdl_LIBRARY_DIRS})
+@@ -13,16 +16,9 @@ link_directories(${orocos_kdl_LIBRARY_DIRS})
  if(DEFINED ENV{ROS_PYTHON_VERSION})
    SET(PYTHON_VERSION $ENV{ROS_PYTHON_VERSION} CACHE STRING "Python Version")
  else()
@@ -20,17 +20,17 @@ index 655c316b..a319bb00 100644
 +  SET(PYTHON_VERSION 3 CACHE STRING "Python Version")
  endif()
  
- set(PYBIND11_PYTHON_VERSION ${PYTHON_VERSION} CACHE STRING "Python version used by PyBind11")
-@@ -22,7 +22,7 @@ find_package(PythonInterp ${PYTHON_VERSION} REQUIRED)
- find_package(PythonLibs ${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR} REQUIRED)
- # get_python_lib in python3 produces path which isn't in sys.path: https://bugs.launchpad.net/ubuntu/+source/python3-stdlib-extensions/+bug/1832215
- # execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(plat_specific=True, prefix=''))" OUTPUT_VARIABLE PYTHON_SITE_PACKAGES OUTPUT_STRIP_TRAILING_WHITESPACE)
+-set(PYBIND11_PYTHON_VERSION ${PYTHON_VERSION} CACHE STRING "Python version used by PyBind11")
+-
+-find_package(PythonInterp ${PYTHON_VERSION} REQUIRED)
+-find_package(PythonLibs ${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR} REQUIRED)
+-# get_python_lib in python3 produces path which isn't in sys.path: https://bugs.launchpad.net/ubuntu/+source/python3-stdlib-extensions/+bug/1832215
+-# execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(plat_specific=True, prefix=''))" OUTPUT_VARIABLE PYTHON_SITE_PACKAGES OUTPUT_STRIP_TRAILING_WHITESPACE)
 -set(PYTHON_SITE_PACKAGES_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/dist-packages")  # This might be overridden below if built with catkin.
-+set(PYTHON_SITE_PACKAGES_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages")  # This might be overridden below if built with catkin.
  set(LIBRARY_NAME "PyKDL")
  
  # catkin-specific configuration (optional)
-@@ -37,8 +37,13 @@ if(catkin_FOUND)
+@@ -37,8 +33,13 @@ if(catkin_FOUND)
  endif()
  
  # Build the module
