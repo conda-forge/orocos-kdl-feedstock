@@ -1,5 +1,5 @@
 {% set name = "orocos-kdl" %}
-{% set version = "1.4.0" %}
+{% set version = "1.5.0" %}
 
 package:
   name: {{ name }}
@@ -7,27 +7,25 @@ package:
 
 source:
   url: https://github.com/orocos/orocos_kinematics_dynamics/archive/v{{ version }}.tar.gz
-  sha256: 05b93e759923684dc07433ccae1e476d158d89b3c2be5079c20062406da7b4dd
+  sha256: 6d4b04c465f0974286fbb419c40e3aca145f616571f2462e2696b830288234a9
   patches:
     - orocos_kdl.patch
     - python_orocos_kdl.patch
-    - python_osx.patch                    # [osx]
-    - assignment_operator.patch           # [unix]
-    - crosscompile_sip_include_dir.patch  # [build_platform != target_platform]
 
 build:
   number: 0
-  skip: true  # [win and vc<14]
-  script: "echo 'do nothing'"  # [unix]
-  run_exports:
-    - {{ pin_subpackage('orocos-kdl', max_pin='x.x') }}
-    - {{ pin_subpackage('python-orocos-kdl', max_pin='x.x') }}
 
 outputs:
   - name: orocos-kdl
     version: {{ version }}
     script: buildpkg.sh  # [unix]
-    script: bldpkg.bat   # [win]
+    script: bldpkg.bat  # [win]
+    build:
+      run_exports:
+        - {{ pin_subpackage('orocos-kdl', max_pin='x.x') }}
+      ignore_run_exports_from:
+        - python                                 # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     requirements:
       build:
         - {{ compiler('cxx') }}
@@ -36,8 +34,11 @@ outputs:
         - ninja       # [win]
         - make        # [not win]
         - pkg-config
+        - python                                 # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}     # [build_platform != target_platform]        
       host:
         - eigen
+        - python
       run:
         - eigen
     test:
@@ -48,34 +49,39 @@ outputs:
   - name: python-orocos-kdl
     version: {{ version }}
     script: buildpkg.sh  # [unix]
-    script: bldpkg.bat   # [win]
+    script: bldpkg.bat  # [win]
+    build:
+      run_exports:
+        - {{ pin_subpackage('python-orocos-kdl', max_pin='x.x') }}
+      ignore_run_exports_from:
+        - python                                 # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     requirements:
       build:
         - python                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+        - pybind11                               # [build_platform != target_platform]
         - {{ compiler('cxx') }}
         - {{ compiler('c') }}
         - cmake
-        - ninja  # [win]
-        - make  # [not win]
+        - ninja                                  # [win]
+        - make                                   # [not win]
         - pkg-config
-        - sip                                    # [build_platform != target_platform]
       host:
         - python
         - eigen
         - orocos-kdl
-        - sip 4.19.20                            # [win]
-        - sip                                    # [not win and build_platform == target_platform]
+        - pybind11
       run:
         - python
         - eigen
         - orocos-kdl
-        - sip 4.19.20                            # [win]
-        - sip                                    # [not win]
+        - pybind11
     test:
       imports:
         - PyKDL
-
+      commands:
+        - python -c "from PyKDL import Joint; j = Joint('test')"
 about:
   home: https://github.com/orocos/orocos_kinematics_dynamics
   license: LGPL-2.1-or-later
