@@ -9,7 +9,6 @@ source:
   url: https://github.com/orocos/orocos_kinematics_dynamics/archive/v{{ version }}.tar.gz
   sha256: 5acb90acd82b10971717aca6c17874390762ecdaa3a8e4db04984ea1d4a2af9b
   patches:
-    - orocos_kdl.patch
     - python_orocos_kdl.patch
 
 build:
