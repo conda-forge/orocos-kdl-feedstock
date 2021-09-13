@@ -1,23 +1,9 @@
 diff --git a/python_orocos_kdl/CMakeLists.txt b/python_orocos_kdl/CMakeLists.txt
-index 655c316..cc6879b 100644
+index 09897cb3..75cc4503 100644
 --- a/python_orocos_kdl/CMakeLists.txt
 +++ b/python_orocos_kdl/CMakeLists.txt
-@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.0.2)
- if(POLICY CMP0048)
-   cmake_policy(SET CMP0048 NEW)
- endif()
-+if(POLICY CMP0057)
-+  cmake_policy(SET CMP0057 NEW)  # support IN_LISTS
-+endif()
- 
- project(python_orocos_kdl VERSION 1.5.0)
- 
-@@ -13,16 +16,9 @@ link_directories(${orocos_kdl_LIBRARY_DIRS})
- if(DEFINED ENV{ROS_PYTHON_VERSION})
-   SET(PYTHON_VERSION $ENV{ROS_PYTHON_VERSION} CACHE STRING "Python Version")
- else()
--  SET(PYTHON_VERSION 2 CACHE STRING "Python Version")
-+  SET(PYTHON_VERSION 3 CACHE STRING "Python Version")
+@@ -19,13 +19,6 @@ else()
+   SET(PYTHON_VERSION 3 CACHE STRING "Python Version")
  endif()
  
 -set(PYBIND11_PYTHON_VERSION ${PYTHON_VERSION} CACHE STRING "Python version used by PyBind11")
@@ -30,17 +16,11 @@ index 655c316..cc6879b 100644
  set(LIBRARY_NAME "PyKDL")
  
  # catkin-specific configuration (optional)
-@@ -37,8 +33,13 @@ if(catkin_FOUND)
+@@ -46,7 +39,8 @@ else()
+   set(PYTHON_MODULE_EXTENSION ".so")
  endif()
  
- # Build the module
--SET(PYTHON_MODULE_EXTENSION ".so")
 -add_subdirectory(pybind11)
-+if(WIN32)
-+  # set(PYTHON_MODULE_EXTENSION ".pyd")
-+else()
-+  set(PYTHON_MODULE_EXTENSION ".so")
-+endif()
 +find_package(Python COMPONENTS Interpreter Development)
 +find_package(pybind11 CONFIG REQUIRED)
  pybind11_add_module(${LIBRARY_NAME}
