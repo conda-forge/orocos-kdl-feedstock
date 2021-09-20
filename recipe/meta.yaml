@@ -10,9 +10,10 @@ source:
   sha256: 5acb90acd82b10971717aca6c17874390762ecdaa3a8e4db04984ea1d4a2af9b
   patches:
     - python_orocos_kdl.patch
+    - remove_version_symlinks.patch 
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: orocos-kdl
