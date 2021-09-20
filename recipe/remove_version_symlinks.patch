@@ -1,0 +1,13 @@
+diff --git a/orocos_kdl/src/CMakeLists.txt b/orocos_kdl/src/CMakeLists.txt
+index ca63079c..5b8f81c2 100644
+--- a/orocos_kdl/src/CMakeLists.txt
++++ b/orocos_kdl/src/CMakeLists.txt
+@@ -58,8 +58,6 @@ ENDIF()
+ ADD_LIBRARY(orocos-kdl ${LIB_TYPE} ${KDL_SRCS} config.h)
+ 
+ SET_TARGET_PROPERTIES( orocos-kdl PROPERTIES
+-  SOVERSION "${KDL_VERSION_MAJOR}.${KDL_VERSION_MINOR}"
+-  VERSION "${KDL_VERSION}"
+   COMPILE_FLAGS "${CMAKE_CXX_FLAGS_ADD} ${KDL_CFLAGS}"
+   PUBLIC_HEADER "${KDL_HPPS};${CMAKE_CURRENT_BINARY_DIR}/config.h"
+   )
