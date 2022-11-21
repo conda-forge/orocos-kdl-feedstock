@@ -1,11 +1,17 @@
 diff --git a/python_orocos_kdl/CMakeLists.txt b/python_orocos_kdl/CMakeLists.txt
-index 09897cb3..75cc4503 100644
+index 09897cb3..283f25d8 100644
 --- a/python_orocos_kdl/CMakeLists.txt
 +++ b/python_orocos_kdl/CMakeLists.txt
-@@ -19,13 +19,6 @@ else()
-   SET(PYTHON_VERSION 3 CACHE STRING "Python Version")
- endif()
+@@ -13,19 +13,6 @@ find_package(orocos_kdl ${PROJECT_VERSION} EXACT REQUIRED)
+ include_directories(${orocos_kdl_INCLUDE_DIRS})
+ link_directories(${orocos_kdl_LIBRARY_DIRS})
  
+-if(DEFINED ENV{ROS_PYTHON_VERSION})
+-  SET(PYTHON_VERSION $ENV{ROS_PYTHON_VERSION} CACHE STRING "Python Version")
+-else()
+-  SET(PYTHON_VERSION 3 CACHE STRING "Python Version")
+-endif()
+-
 -set(PYBIND11_PYTHON_VERSION ${PYTHON_VERSION} CACHE STRING "Python version used by PyBind11")
 -
 -find_package(PythonInterp ${PYTHON_VERSION} REQUIRED)
@@ -16,10 +22,17 @@ index 09897cb3..75cc4503 100644
  set(LIBRARY_NAME "PyKDL")
  
  # catkin-specific configuration (optional)
-@@ -46,7 +39,8 @@ else()
-   set(PYTHON_MODULE_EXTENSION ".so")
+@@ -39,14 +26,8 @@ if(catkin_FOUND)
+   set(PYTHON_SITE_PACKAGES_INSTALL_DIR "${PYTHON_INSTALL_DIR}")
  endif()
  
+-# Build the module
+-if(WIN32)
+-  set(PYTHON_MODULE_EXTENSION ".pyd")
+-else()
+-  set(PYTHON_MODULE_EXTENSION ".so")
+-endif()
+-
 -add_subdirectory(pybind11)
 +find_package(Python COMPONENTS Interpreter Development)
 +find_package(pybind11 CONFIG REQUIRED)
