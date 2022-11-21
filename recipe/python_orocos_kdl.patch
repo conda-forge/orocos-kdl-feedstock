@@ -35,7 +35,7 @@ index 09897cb3..283f25d8 100644
 -
 -add_subdirectory(pybind11)
 +find_package(Python COMPONENTS Interpreter Development)
-+find_package(pybind11 CONFIG REQUIRED
++find_package(pybind11 CONFIG REQUIRED)
  pybind11_add_module(${LIBRARY_NAME}
    PyKDL/PyKDL.h
    PyKDL/PyKDL.cpp
