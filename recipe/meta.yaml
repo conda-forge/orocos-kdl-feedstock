@@ -23,9 +23,6 @@ outputs:
     build:
       run_exports:
         - {{ pin_subpackage('orocos-kdl', max_pin='x.x') }}
-      ignore_run_exports_from:
-        - python                                 # [build_platform != target_platform]
-        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     requirements:
       build:
         - {{ compiler('cxx') }}
@@ -33,12 +30,9 @@ outputs:
         - cmake
         - ninja       # [win]
         - make        # [not win]
-        - pkg-config
-        - python                                 # [build_platform != target_platform]
-        - cross-python_{{ target_platform }}     # [build_platform != target_platform]        
+        - pkg-config      
       host:
         - eigen
-        - python
       run:
         - eigen
     test:
@@ -53,9 +47,6 @@ outputs:
     build:
       run_exports:
         - {{ pin_subpackage('python-orocos-kdl', max_pin='x.x') }}
-      ignore_run_exports_from:
-        - python                                 # [build_platform != target_platform]
-        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     requirements:
       build:
         - python                                 # [build_platform != target_platform]
