@@ -13,7 +13,7 @@ source:
     - remove_version_symlinks.patch 
 
 build:
-  number: 4
+  number: 5
 
 outputs:
   - name: orocos-kdl
