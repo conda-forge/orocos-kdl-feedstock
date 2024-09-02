@@ -27,6 +27,7 @@ outputs:
       build:
         - {{ compiler('cxx') }}
         - {{ compiler('c') }}
+        - {{ stdlib('c') }}
         - cmake
         - ninja       # [win]
         - make        # [not win]
@@ -54,6 +55,7 @@ outputs:
         - pybind11                               # [build_platform != target_platform]
         - {{ compiler('cxx') }}
         - {{ compiler('c') }}
+        - {{ stdlib('c') }}
         - cmake
         - ninja                                  # [win]
         - make                                   # [not win]
@@ -73,6 +75,7 @@ outputs:
         - PyKDL
       commands:
         - python -c "from PyKDL import Joint; j = Joint('test')"
+
 about:
   home: https://github.com/orocos/orocos_kinematics_dynamics
   license: LGPL-2.1-or-later
