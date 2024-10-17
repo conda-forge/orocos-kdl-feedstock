@@ -1,0 +1,81 @@
+From ef39a4fd5cfb1400b2e6e034b1a99b8ad91192cf Mon Sep 17 00:00:00 2001
+From: Dirk Thomas <dirk-thomas@users.noreply.github.com>
+Date: Fri, 1 May 2020 10:20:08 -0700
+Subject: [PATCH 1/2] export modern CMake interface target
+
+* export modern CMake interface target
+* remove redundant include_directories
+
+Signed-off-by: Dirk Thomas <dirk-thomas@users.noreply.github.com>
+
+Original pull request on ROS 2 fork: https://github.com/ros2/orocos_kinematics_dynamics/pull/14
+
+Signed-off-by: Jacob Perron <jacob@openrobotics.org>
+---
+ orocos_kdl/orocos_kdl-config.cmake.in | 1 +
+ orocos_kdl/src/CMakeLists.txt         | 6 +++++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/orocos_kdl/orocos_kdl-config.cmake.in b/orocos_kdl/orocos_kdl-config.cmake.in
+index 4cc8bc598..d17d43349 100644
+--- a/orocos_kdl/orocos_kdl-config.cmake.in
++++ b/orocos_kdl/orocos_kdl-config.cmake.in
+@@ -28,6 +28,7 @@ set(orocos_kdl_INCLUDE_DIRS
+   ${EIGEN3_INCLUDE_DIR}
+ )
+ set(orocos_kdl_LIBRARIES orocos-kdl)
++set(orocos_kdl_TARGETS orocos-kdl)
+ 
+ # where the .pc pkgconfig files are installed
+ set(orocos_kdl_PKGCONFIG_DIR "${orocos_kdl_PREFIX}/lib/pkgconfig")
+diff --git a/orocos_kdl/src/CMakeLists.txt b/orocos_kdl/src/CMakeLists.txt
+index ca63079c7..2b1e40a37 100644
+--- a/orocos_kdl/src/CMakeLists.txt
++++ b/orocos_kdl/src/CMakeLists.txt
+@@ -57,6 +57,9 @@ ENDIF()
+ 
+ ADD_LIBRARY(orocos-kdl ${LIB_TYPE} ${KDL_SRCS} config.h)
+ 
++TARGET_INCLUDE_DIRECTORIES(orocos-kdl PUBLIC
++  "$<INSTALL_INTERFACE:include>")
++
+ SET_TARGET_PROPERTIES( orocos-kdl PROPERTIES
+   SOVERSION "${KDL_VERSION_MAJOR}.${KDL_VERSION_MINOR}"
+   VERSION "${KDL_VERSION}"
+@@ -80,7 +83,8 @@ ENDIF()
+ #####end RPATH
+ 
+ # Needed so that the generated config.h can be used
+-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
++TARGET_INCLUDE_DIRECTORIES(orocos-kdl PUBLIC
++  "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>")
+ TARGET_LINK_LIBRARIES(orocos-kdl ${Boost_LIBRARIES})
+ 
+ INSTALL(TARGETS orocos-kdl
+
+From ef1aef51039dfac2b5bec9337b10e550384e77ab Mon Sep 17 00:00:00 2001
+From: Matthijs van der Burgh <MatthijsBurgh@outlook.com>
+Date: Fri, 29 Oct 2021 17:42:53 +0200
+Subject: [PATCH 2/2] (kdl) Use minimal cmake 3.0.2
+
+---
+ orocos_kdl/CMakeLists.txt | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/orocos_kdl/CMakeLists.txt b/orocos_kdl/CMakeLists.txt
+index a15bd15d5..a1b335cd9 100644
+--- a/orocos_kdl/CMakeLists.txt
++++ b/orocos_kdl/CMakeLists.txt
+@@ -1,11 +1,7 @@
+ #
+ # Test CMake version
+ #
+-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+-IF(POLICY CMP0048)
+-  CMAKE_POLICY(SET CMP0048 NEW)
+-ENDIF()
+-#MARK_AS_ADVANCED( FORCE CMAKE_BACKWARDS_COMPATIBILITY )
++CMAKE_MINIMUM_REQUIRED(VERSION 3.0.2)
+ 
+ 
+ ###################################################

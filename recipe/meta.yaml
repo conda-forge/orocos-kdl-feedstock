@@ -10,10 +10,11 @@ source:
   sha256: 5acb90acd82b10971717aca6c17874390762ecdaa3a8e4db04984ea1d4a2af9b
   patches:
     - python_orocos_kdl.patch
-    - remove_version_symlinks.patch 
+    - remove_version_symlinks.patch
+    - 366.patch
 
 build:
-  number: 7
+  number: 8
 
 outputs:
   - name: orocos-kdl
@@ -41,6 +42,12 @@ outputs:
         - if not exist %LIBRARY_PREFIX%\\lib\\orocos-kdl.lib exit 1  # [win]
         - if not exist %LIBRARY_PREFIX%\\lib\\orocos-kdl.dll exit 1  # [win]
         - test -f $PREFIX/lib/liborocos-kdl${SHLIB_EXT}              # [unix]
+        - cmake-package-check orocos_kdl --targets orocos-kdl
+      requires:
+        - cmake-package-check
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+
   - name: python-orocos-kdl
     version: {{ version }}
     script: buildpkg.sh  # [unix]
@@ -89,3 +96,4 @@ extra:
     - seanyen
     - wolfv
     - Tobias-Fischer
+    - traversaro
