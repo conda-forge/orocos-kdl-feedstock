@@ -11,7 +11,6 @@ source:
   patches:
     - python_orocos_kdl.patch
     - remove_version_symlinks.patch
-    - 366.patch
 
 build:
   number: 0
