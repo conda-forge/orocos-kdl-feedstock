@@ -13,7 +13,7 @@ source:
     - remove_version_symlinks.patch
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: orocos-kdl
@@ -33,9 +33,7 @@ outputs:
         - make        # [not win]
         - pkg-config
       host:
-        - eigen
-      run:
-        - eigen
+        - eigen-abi-devel
     test:
       commands:
         - if not exist %LIBRARY_PREFIX%\\lib\\orocos-kdl.lib exit 1  # [win]
@@ -68,12 +66,10 @@ outputs:
         - pkg-config
       host:
         - python
-        - eigen
         - orocos-kdl
         - pybind11
       run:
         - python
-        - eigen
         - orocos-kdl
         - pybind11
     test:
