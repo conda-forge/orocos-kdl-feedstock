@@ -36,6 +36,8 @@ outputs:
       host:
         - eigen
         - eigen-abi-devel
+      run:
+        - eigen
     test:
       commands:
         - if not exist %LIBRARY_PREFIX%\\lib\\orocos-kdl.lib exit 1  # [win]
@@ -73,6 +75,7 @@ outputs:
         - pybind11
       run:
         - python
+        - eigen
         - orocos-kdl
         - pybind11
     test:
