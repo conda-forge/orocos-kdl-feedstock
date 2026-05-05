@@ -68,6 +68,7 @@ outputs:
         - pkg-config
       host:
         - python
+        - eigen
         - orocos-kdl
         - pybind11
       run:
