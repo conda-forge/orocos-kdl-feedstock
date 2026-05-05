@@ -11,6 +11,7 @@ source:
   patches:
     - python_orocos_kdl.patch
     - remove_version_symlinks.patch
+    - eigen5_targets.patch
 
 build:
   number: 1
