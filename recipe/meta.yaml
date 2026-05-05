@@ -11,9 +11,10 @@ source:
   patches:
     - python_orocos_kdl.patch
     - remove_version_symlinks.patch
+    - eigen5_targets.patch
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: orocos-kdl
@@ -34,6 +35,7 @@ outputs:
         - pkg-config
       host:
         - eigen
+        - eigen-abi-devel
       run:
         - eigen
     test:
