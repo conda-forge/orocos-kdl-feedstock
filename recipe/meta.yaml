@@ -14,7 +14,7 @@ source:
     - eigen5_targets.patch
 
 build:
-  number: 1
+  number: 2
 
 outputs:
   - name: orocos-kdl
