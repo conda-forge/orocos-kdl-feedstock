@@ -6,6 +6,12 @@ cd build
 
 PKG_NAME_ALIAS=${PKG_NAME//-/_}
 
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" == "1" && "${PKG_NAME}" == "python-orocos-kdl" ]]; then
+  # FindPython only searches $PREFIX for headers when cross-compiling; point it there
+  PY_INC=$PREFIX/include/python${PY_VER}
+  CMAKE_ARGS="${CMAKE_ARGS} -DPython3_INCLUDE_DIR=${PY_INC} -DPython_INCLUDE_DIR=${PY_INC}"
+fi
+
 cmake ${CMAKE_ARGS} $SRC_DIR/$PKG_NAME_ALIAS \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
     -DCMAKE_PREFIX_PATH=$PREFIX \
